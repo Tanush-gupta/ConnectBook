@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "426936003898",
+    "project_id": "fir-dcc1d",
+    "storage_bucket": "fir-dcc1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426936003898:android:729608ff98cc8553b1b403",
+        "android_client_info": {
+          "package_name": "com.connectbook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI2kzrC88CavWbiqN5i_7jvMMWJtJG9AE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
