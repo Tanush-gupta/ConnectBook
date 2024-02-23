@@ -9,35 +9,26 @@ import Search from '../tabs/Search';
 import Upload from '../tabs/Upload';
 import Messages from '../tabs/Messages';
 import Profile from '../tabs/Profile';
-export default function MainScreen() {
+export default function MainScreen({ navigation }) {
 
 
-    const [page, setPage] = useState(3);
+    const [page, setPage] = useState(1);
 
     const temp = (s) => {
         console.log(s);
         setPage(s);
     }
 
-    const Pressed = async () => {
-        const result = await launchImageLibrary({ mediaType: 'photo' });
-        console.log(result.assets[0].fileName);
-        const reference = storage().ref(result.assets[0].fileName);
-        const pathToFile = result.assets[0].uri;
-        await reference.putFile(pathToFile);
-        console.log("DOne :)");
-    }
+
 
     return (
-        <View style={{ height: '100%', backgroundColor: "#e2e3de" }} >
+        <View style={{ height: '100%', backgroundColor: "#e2e3de", marginBottom: 100 }} >
 
             {
-                page == 1 ? <Activity /> : page == 2 ? <Search /> : page == 3 ? <Upload /> : page == 4 ? <Messages /> : <Profile />
+                page == 1 ? <Activity /> : page == 2 ? <Search /> : page == 3 ? <Upload /> : page == 4 ? <Messages navigation={navigation} /> : <Profile />
             }
 
-
-
-            <View style={{ position: 'absolute', width: '100%', bottom: 0 }} >
+            <View style={{ position: 'absolute', width: '100%', bottom: 0, }} >
                 <BottomBar st={temp} />
             </View >
         </ View >

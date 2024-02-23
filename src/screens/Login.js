@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
 
@@ -18,8 +19,10 @@ export default function LoginScreen() {
             .where('email', '==', email)
             .get()
             .then(querySnapshot => {
-                if (querySnapshot.docs) {
+                if (querySnapshot.docs[0]._data.email === email &&
+                    querySnapshot.docs[0]._data.password === password) {
                     console.log('Accound Found');
+                    saveLocalData(querySnapshot.docs[0]._data);
                     navigation.navigate("HomeScreen");
                 }
                 else {
@@ -27,6 +30,13 @@ export default function LoginScreen() {
                 }
             }
             );
+    }
+
+    const saveLocalData = async (userData) => {
+        await AsyncStorage.setItem('UserId', userData.userId);
+        await AsyncStorage.setItem('Username', userData.username);
+        await AsyncStorage.setItem('Email', userData.email);
+        console.log("Data Stored Sucessfully");
     }
 
     return (

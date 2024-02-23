@@ -5,7 +5,9 @@ import Icon1 from 'react-native-vector-icons/Feather'
 
 
 export default function BottomBar({ st }) {
+
     return (
+
         <View className=" flex-row justify-around p-3 bg-white" >
 
             <Icon name="home" size={30} color="#5b6b6e" onPress={() => st(1)} />
@@ -44,7 +46,5 @@ export default function BottomBar({ st }) {
 }
 
 const styles = StyleSheet.create({
-    active: {
 
-    },
 })

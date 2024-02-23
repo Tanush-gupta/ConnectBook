@@ -5,14 +5,15 @@ import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 export default function SignupScreen() {
     const navigation = useNavigation();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-
+    let userId = uuid.v4();
     const showToastWithGravity = (msg) => {
         ToastAndroid.showWithGravityAndOffset(
             msg,
@@ -37,16 +38,23 @@ export default function SignupScreen() {
                 else {
                     firestore()
                         .collection('Users')
-                        .add({
+                        .doc(userId)
+                        .set({
                             username: username,
                             email: email,
                             password: password,
+                            userId: userId,
+                            followers: [],
+                            following: [],
+                            bio: "",
+                            posts: [],
+                            profilePicture: "",
                         })
                         .then(() => {
                             console.log('User added!');
+                            // saveLocalData();
                         });
                     showToastWithGravity("User added!");
-
                     setTimeout(() => {
                         navigation.goBack();
                     }, 800)
