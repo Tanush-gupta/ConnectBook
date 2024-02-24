@@ -19,7 +19,7 @@ export default function Card({ Post }) {
     }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && Post.likes) {
             setLike(Post.likes.includes(userId));
         }
     }, [userId, Post.likes]);
@@ -71,7 +71,7 @@ export default function Card({ Post }) {
                             : <Image className="h-9 w-9 p-1" source={require('./../../assets/icons/heart.png')} />
                     }
                 </TouchableOpacity>
-                <Text>{Post.likes.length}</Text>
+                <Text>{Post.likes ? Post.likes.length : 0}</Text>
 
                 <TouchableOpacity onPress={commentPressed}>
                     <Image className="h-7 w-7 p-1 mx-2" source={require('./../../assets/icons/comment.png')} />

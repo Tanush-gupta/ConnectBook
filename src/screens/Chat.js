@@ -1,16 +1,16 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
-import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, InputToolbar, Message, Send } from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
-// import { launchCamera } from 'react-native-image-picker';
+import { launchCamera } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Chat = ({ route }) => {
+const Chat = ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
-  // const [imageData, setImageData] = useState(null);
-  // const [imageUrl, setImageUrl] = useState();
-  const { myId, userId } = route.params;
+  const [imageData, setImageData] = useState(null);
+  const [imageUrl, setImageUrl] = useState();
+  const { myId, userId, username } = route.params;
   let docId = sortAlpha(myId + userId);
 
   function sortAlpha(word) {
@@ -18,6 +18,7 @@ const Chat = ({ route }) => {
   }
 
   useEffect(() => {
+    console.log(route.params);
     const unsubscribe = firestore()
       .collection('chats')
       .doc(docId)
@@ -42,7 +43,7 @@ const Chat = ({ route }) => {
         ...message,
         senderId: myId,
         receiverId: userId,
-        // image: imageUrl || '',
+        image: imageUrl || '',
         createdAt: firestore.FieldValue.serverTimestamp(),
       };
       try {
@@ -54,8 +55,8 @@ const Chat = ({ route }) => {
         setMessages(previousMessages =>
           GiftedChat.append(previousMessages, [myMsg]),
         );
-        // setImageUrl('');
-        // setImageData(null);
+        setImageUrl('');
+        setImageData(null);
       } catch (error) {
         console.error('Failed to send message: ', error);
       }
@@ -84,53 +85,32 @@ const Chat = ({ route }) => {
   // };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View className=" flex-1 bg-sky-100 ">
+      <View
+        className="items-center p-3 bg-white flex-row  justify-between  "
+        style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4 }}>
+        <TouchableOpacity className="flex-row items-center" onPress={() => { navigation.goBack() }}>
+          <Image
+            source={require('../../assets/icons/back.png')}
+            className=" h-7 w-7 "
+          />
+          <Text className="text-blue-400">Back</Text>
+        </TouchableOpacity>
+
+        <Text className="text-[15px] text-black">{username}</Text>
+
+        <Image
+          source={require('../../assets/icons/video.png')}
+          className=" h-7 w-7 "
+        />
+      </View>
+
       <GiftedChat
         alwaysShowSend
         renderSend={props => {
           return (
             <View
               style={{ flexDirection: 'row', alignItems: 'center', height: 60 }}>
-              {/* {imageUrl !== ''? (
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 10,
-                    backgroundColor: '#fff',
-                    marginRight: 10,
-                  }}>
-                  <Image
-                    source={{uri: imageData.assets[0].uri}}
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 10,
-                      position: 'absolute',
-                    }}
-                  />
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      setImageUrl('');
-                    }}>
-                    <Image
-                      source={require('../../assets/icons/chat.png')}
-                      style={{width: 16, height: 16, tintColor: '#fff'}}
-                    />
-                  </TouchableOpacity>
-                </View>
-              ) : null} */}
-              {/* <TouchableOpacity
-                style={{marginRight: 20}}
-                onPress={() => {
-                  openCamera();
-                }}>
-                <Image
-                  source={require('../../assets/icons/chat.png')}
-                  style={{width: 24, height: 24}}
-                />
-              </TouchableOpacity> */}
               <Send {...props} containerStyle={{ justifyContent: 'center' }}>
                 <Image
                   source={require('../../assets/icons/chat.png')}
@@ -138,7 +118,7 @@ const Chat = ({ route }) => {
                     width: 24,
                     height: 24,
                     marginRight: 10,
-                    tintColor: 'orange',
+                    tintColor: '#52b1ff',
                   }}
                 />
               </Send>
@@ -150,17 +130,27 @@ const Chat = ({ route }) => {
         user={{
           _id: myId,
         }}
-      // renderBubble={props => {
-      // return (
-      // <Bubble
-      //   {...props}
-      //   wrapperStyle={{
-      //     right: {
 
-      //     },
-      //   }}
-      // />
-      // );
+        renderInputToolbar={props => {
+          return (
+            <InputToolbar
+              {...props}
+              containerStyle={{ backgroundColor: 'white', borderRadius: 10, height: '8%' }}>
+            </InputToolbar>
+          )
+        }}
+
+      // renderBubble={props => {
+      //   return (
+      //     <Bubble
+      //       {...props}
+      //       wrapperStyle={{
+      //         right: {
+
+      //         },
+      //       }}
+      //     />
+      //   );
       // }
       // }
       />

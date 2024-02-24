@@ -27,7 +27,6 @@ export default function Upload() {
         setUsername(storedUsername);
         setEmail(storedEmail);
         setUserId(storedUserId);
-        // console.log(storedUserId, storedEmail, storedUsername);
     }
 
 

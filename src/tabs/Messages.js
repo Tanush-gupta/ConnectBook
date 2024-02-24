@@ -71,7 +71,7 @@ export default function Messages({ navigation }) {
                             </View>
                             <View>
                                 <TouchableOpacity
-                                    onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, userId: item.userId }) }}
+                                    onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, userId: item.userId, username: item.username }) }}
                                     className=" bg-sky-500 p-2  rounded-lg"  >
                                     <Text className="text-white font-semibold">Chat</Text>
                                 </TouchableOpacity>
