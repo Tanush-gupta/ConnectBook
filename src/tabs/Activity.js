@@ -1,9 +1,9 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import Card from '../components/Card';
 import Header from '../components/Header';
-export default function Activity() {
+export default function Activity({ navigation }) {
 
     const [postData, setPostData] = useState([]);
     useEffect(() => {
@@ -12,30 +12,32 @@ export default function Activity() {
             .collection('Post')
             .get()
             .then(querySnapshot => {
-                // console.log('Total Posts: ', querySnapshot.size);
+                console.log('Total Posts: ', querySnapshot.size);
                 querySnapshot.forEach(documentSnapshot => {
                     // console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
                     temp.push(documentSnapshot.data());
                 });
                 setPostData(temp);
                 // console.log(postData);
-            });
-    },);
+            }).catch(error => console.error('Error searching document: ', error));
+    }, []);
     return (
         <View>
-            <Header />
-            <View className="h-full w-full justify-center items-center bg-gray-300">
+            <Header navigation={navigation} />
+            <View className=" w-full justify-center items-center bg-gray-300">
                 {postData.length > 0 ? (
-                    <FlatList
+
+                    < FlatList
                         data={postData}
                         renderItem={({ item }) => <Card Post={item} />}
                         keyExtractor={item => item.post_id}
                     />
+
                 )
-                    : (<Text>No post Found</Text>)
+                    : <ActivityIndicator size="large" />
                 }
             </View>
-        </View>
+        </View >
 
 
     )

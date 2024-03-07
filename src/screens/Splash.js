@@ -2,13 +2,7 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useEffect } from 'react'
 
 
-export default function Splash({ navigation }) {
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate("LoginScreen");
-        }, 1000);
-
-    }, []);
+export default function Splash() {
     return (
         <View className="h-full w-full  bg-sky-000 justify-center items-center">
             <Text className="font-bold text-3xl text-amber-950"> ConnectBook </Text>

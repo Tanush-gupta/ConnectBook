@@ -10,7 +10,7 @@ const Chat = ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
   const [imageData, setImageData] = useState(null);
   const [imageUrl, setImageUrl] = useState();
-  const { myId, userId, username } = route.params;
+  const { myId, userId, username, userdp } = route.params;
   let docId = sortAlpha(myId + userId);
 
   function sortAlpha(word) {
@@ -19,21 +19,23 @@ const Chat = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(route.params);
-    const unsubscribe = firestore()
+    const messagesListener = firestore()
       .collection('chats')
       .doc(docId)
       .collection('messages')
       .orderBy('createdAt', 'desc')
       .onSnapshot(snapshot => {
-        const allMessages = snapshot.docs.map(doc => ({
-          _id: doc.id,
-          ...doc.data(),
+        const fetchedMessages = snapshot.docs.map(document => ({
+          _id: document.id,
+          ...document.data(),
           createdAt: new Date(),
         }));
-        setMessages(allMessages);
+        setMessages(fetchedMessages);
+      }, error => {
+        console.error("Error fetching messages:", error);
       });
 
-    return () => unsubscribe();
+    return () => messagesListener();
   }, [docId]);
 
   const onSend = useCallback(
@@ -45,6 +47,7 @@ const Chat = ({ route, navigation }) => {
         receiverId: userId,
         image: imageUrl || '',
         createdAt: firestore.FieldValue.serverTimestamp(),
+
       };
       try {
         await firestore()
@@ -64,25 +67,7 @@ const Chat = ({ route, navigation }) => {
     [myId, userId, docId],
   );
 
-  // const openCamera = async () => {
-  //   const result = await launchCamera({ mediaType: 'photo' });
-  //   if (result.didCancel) {
-  //     console.log('Camera launch cancelled');
-  //   } else {
-  //     setImageData(result);
-  //     uploadImage(result);
-  //   }
-  // };
 
-  // const uploadImage = async (imageData) => {
-  //   if (imageData.assets && imageData.assets.length > 0) {
-  //     const { fileName, uri } = imageData.assets[0];
-  //     const reference = storage().ref(fileName);
-  //     await reference.putFile(uri);
-  //     const url = await reference.getDownloadURL();
-  //     setImageUrl(url);
-  //   }
-  // };
 
   return (
     <View className=" flex-1 bg-sky-100 ">
@@ -129,32 +114,22 @@ const Chat = ({ route, navigation }) => {
         onSend={messages => onSend(messages)}
         user={{
           _id: myId,
+          avatar: userdp,
         }}
 
         renderInputToolbar={props => {
           return (
             <InputToolbar
               {...props}
-              containerStyle={{ backgroundColor: 'white', borderRadius: 10, height: '8%' }}>
+              containerStyle={{ backgroundColor: 'white', borderRadius: 20, position: 'absolute' }}>
             </InputToolbar>
           )
         }}
 
-      // renderBubble={props => {
-      //   return (
-      //     <Bubble
-      //       {...props}
-      //       wrapperStyle={{
-      //         right: {
 
-      //         },
-      //       }}
-      //     />
-      //   );
-      // }
-      // }
+
       />
-    </View>
+    </View >
   );
 };
 

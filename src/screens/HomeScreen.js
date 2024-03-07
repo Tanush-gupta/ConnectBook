@@ -11,9 +11,7 @@ import Messages from '../tabs/Messages';
 import Profile from '../tabs/Profile';
 export default function MainScreen({ navigation }) {
 
-
     const [page, setPage] = useState(1);
-
     const temp = (s) => {
         console.log(s);
         setPage(s);
@@ -22,11 +20,12 @@ export default function MainScreen({ navigation }) {
 
 
     return (
-        <View style={{ height: '100%', backgroundColor: "#e2e3de", marginBottom: 100 }} >
-
-            {
-                page == 1 ? <Activity /> : page == 2 ? <Search /> : page == 3 ? <Upload /> : page == 4 ? <Messages navigation={navigation} /> : <Profile />
-            }
+        <View style={{ height: '100%', backgroundColor: "#e8e8e8", marginBottom: 100 }} >
+            <View className="  mb-[100px]" >
+                {
+                    page == 1 ? <Activity navigation={navigation} /> : page == 2 ? <Search /> : page == 3 ? <Upload /> : page == 4 ? <Messages navigation={navigation} /> : <Profile />
+                }
+            </View>
 
             <View style={{ position: 'absolute', width: '100%', bottom: 0, }} >
                 <BottomBar st={temp} />

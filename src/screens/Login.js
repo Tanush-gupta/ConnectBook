@@ -23,7 +23,7 @@ export default function LoginScreen() {
                     querySnapshot.docs[0]._data.password === password) {
                     console.log('Accound Found');
                     saveLocalData(querySnapshot.docs[0]._data);
-                    navigation.navigate("HomeScreen");
+                    // navigation.navigate("HomeScreen");
                 }
                 else {
                     console.log('Account Not found');

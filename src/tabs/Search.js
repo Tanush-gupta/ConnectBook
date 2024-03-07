@@ -41,7 +41,6 @@ export default function Search() {
                 .then(querySnapshot => {
                     const userData = querySnapshot.docs.map(doc => doc.data())[0]; // Adjusted to map and get the first item
                     setUserData(userData);
-                    // console.log(userData);
                 })
                 .catch(error => console.error('Error fetching user data: ', error));
         }
@@ -98,6 +97,7 @@ export default function Search() {
     return (
         <View>
             <View className="bg-white flex-row items-center  m-2  rounded-3xl ">
+
                 <Image
                     source={require('./../../assets/icons/searchg.png')}
                     className="h-6 w-6 ml-3"
@@ -114,10 +114,20 @@ export default function Search() {
                 renderItem={({ item }) => (
                     <View className=" flex-row items-center justify-between  px-2 bg-white rounded-lg ">
                         <View className=" flex-row items-center p-2 ">
-                            <Image
-                                source={require('./../../assets/images/ProfilePicture.jpg')}
-                                style={styles.displayPicture}
-                            />
+
+                            {
+                                item.profilePicture ?
+                                    <Image
+                                        source={{ uri: item.profilePicture }}
+                                        style={styles.displayPicture}
+                                    />
+                                    :
+                                    <Image
+                                        source={require('./../../assets/images/ProfilePicture.jpg')}
+                                        style={styles.displayPicture}
+                                    />
+                            }
+
                             <Text className="text-black">{item.username}</Text>
                         </View>
                         <View>

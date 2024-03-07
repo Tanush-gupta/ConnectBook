@@ -77,6 +77,9 @@ export default function Upload() {
                     setImg(null);
                     setCaption();
                 });
+
+
+
         }
     }
 

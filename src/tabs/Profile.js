@@ -1,4 +1,4 @@
-import { Alert, Button, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Button, ImageBackground, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import storage from '@react-native-firebase/storage';
@@ -81,7 +81,7 @@ export default function Profile() {
     }, [update]);
 
     if (!userData) {
-        return <View><Text>Loading...</Text></View>;
+        return < ActivityIndicator />
     }
 
     const changeDP = async () => {
@@ -90,70 +90,76 @@ export default function Profile() {
     }
 
     return (
-        <View>
-            {userData && (
-                <View className="p-5 items-center">
-                    <View className=" flex my-2 items-center w-full bg-slate-100  my-20 p-5  rounded-xl" style={styles.shadow}>
-                        <TouchableOpacity className=" mx-2" onLongPress={changeDP}>
+        <ImageBackground source={require('../../assets/images/profile_bg.jpeg')} className="h-full" >
+            <View className=" h-full">
+                {userData && (
+                    <View className="p-5 items-center">
+                        <View className=" flex my-2 items-center w-full bg-slate-100  my-20 p-5  rounded-xl" style={styles.shadow}>
+                            <TouchableOpacity className=" mx-2" onLongPress={changeDP}>
 
+                                {
+                                    userData.profilePicture ?
+                                        <Image source={{ uri: userData.profilePicture }} style={styles.displayPicture} />
+                                        :
+                                        <Image source={require('./../../assets/images/ProfilePicture.jpg')} style={styles.displayPicture} />
+                                }
+
+                            </TouchableOpacity>
+                            <View className="my-3">
+                                <Text className=" text-[20px] text-black font-semibold">{userData.username}</Text>
+                            </View>
                             {
-                                userData.profilePicture ?
-                                    <Image source={{ uri: userData.profilePicture }} style={styles.displayPicture} />
-                                    :
-                                    <Image source={require('./../../assets/images/ProfilePicture.jpg')} style={styles.displayPicture} />
+                                !update &&
+                                <View className=" bg-[#dfe1e6]  p-2 rounded-xl my-5">
+                                    <Text> {userData.bio} </Text>
+                                </View>
                             }
 
-                        </TouchableOpacity>
-                        <View className="my-3">
-                            <Text className=" text-[20px] text-black font-semibold">{userData.username}</Text>
-                        </View>
-                        {
-                            !update &&
-                            <View className=" bg-sky-200  p-2 rounded-xl my-2">
-                                <Text> {userData.bio} </Text>
-                            </View>
-                        }
 
-
-                        {update ? <View>
-                            <TextInput placeholder='Enter the Bio' placeholderTextColor={'gray'} textAlign='center' value={bio} onChangeText={(e) => { setBio(e) }} className="rounded-xl bg-slate-300  p-2 " ></TextInput>
-                            <View className=" flex-row p-1 my-2 ">
-                                <TouchableOpacity className="rounded-[10px] p-2  w-22 bg-sky-400 mx-2 " onPress={updateBio} >
-                                    <Text className="font-semibold   text-gray-100 " >Change</Text>
+                            {update ? <View>
+                                <TextInput placeholder='Enter the Bio' placeholderTextColor={'gray'} textAlign='center' value={bio} onChangeText={(e) => { setBio(e) }} className="rounded-xl bg-slate-300  p-2 " ></TextInput>
+                                <View className=" flex-row p-1 my-2 ">
+                                    <TouchableOpacity className="rounded-[10px] p-2  w-22 mx-2 bg-[#9985ff]" onPress={updateBio} >
+                                        <Text className="font-semibold   text-gray-100 " >Change</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity className="rounded-[10px] p-2  w-22 bg-[#ff7a8a] " onPress={() => { setUpdate(false) }} >
+                                        <Text className="font-semibold   text-gray-100  "> Cancel </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View> :
+                                <TouchableOpacity className="rounded-[9px] p-2  w-22 bg-[#24a7f2] " onPress={() => { setUpdate(true) }} >
+                                    <Text className="font-semibold   text-gray-100  ">Update About </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className="rounded-[10px] p-2  w-22 bg-sky-400 " onPress={() => { setUpdate(false) }} >
-                                    <Text className="font-semibold   text-gray-100  "> Cancel </Text>
-                                </TouchableOpacity>
+                            }
+
+
+
+
+
+                            <View className=" flex-row justify-around w-full m-5">
+                                <View className=" justify-center items-center" style={styles.box}>
+                                    <Text className="text-white font-semibold ">{userData.followers ? userData.followers.length : 0}</Text>
+                                    <Text className="text-white font-semibold ">     Posts    </Text>
+                                </View>
+                                <View className=" justify-center items-center" style={styles.box}>
+                                    <Text className="text-white font-semibold ">{userData.followers ? userData.followers.length : 0}</Text>
+                                    <Text className="text-white font-semibold ">Followers</Text>
+                                </View>
+                                <View className=" justify-center items-center" style={styles.box}>
+                                    <Text className="text-white font-semibold  ">{userData.following ? userData.following.length : 0}</Text>
+                                    <Text className="text-white font-semibold ">Following</Text>
+                                </View>
                             </View>
-                        </View> :
-                            <TouchableOpacity className="rounded-[10px] p-2  w-22 bg-sky-400 " onPress={() => { setUpdate(true) }} >
-                                <Text className="font-semibold   text-gray-100  ">Update About </Text>
-                            </TouchableOpacity>
-                        }
 
-
-
-
-
-                        <View className=" flex-row justify-around w-full m-5">
-                            <View className=" justify-center items-center" style={styles.box}>
-                                <Text className="text-grey font-semibold ">{userData.followers ? userData.followers.length : 0}</Text>
-                                <Text className="text-grey font-semibold ">Followers</Text>
-                            </View>
-                            <View className=" justify-center items-center" style={styles.box}>
-                                <Text className="text-gray font-semibold  ">{userData.following ? userData.following.length : 0}</Text>
-                                <Text className="text-gray font-semibold ">Following</Text>
-                            </View>
                         </View>
 
                     </View>
 
-                </View>
+                )
+                }
+            </View >
+        </ImageBackground>
 
-            )
-            }
-
-        </View >
     )
 }
 
@@ -165,14 +171,11 @@ const styles = StyleSheet.create({
         borderRadius: 1000
     },
     box: {
-        // borderWidth: 1,
-
         borderRadius: 10,
         borderBlockColor: 'white',
-        backgroundColor: '#edfca7',
+        backgroundColor: '#1d272b',
         marginVertical: 16,
         paddingHorizontal: 12,
-        // paddingHorizontal: 10
         paddingVertical: 10
 
     },
@@ -184,7 +187,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-
         elevation: 6,
     }
 })

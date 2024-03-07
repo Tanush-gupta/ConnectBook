@@ -63,15 +63,24 @@ export default function Messages({ navigation }) {
                     renderItem={({ item }) => (
                         <View className=" flex-row items-center justify-between  px-2 bg-white rounded-lg ">
                             <View className=" flex-row items-center p-2 ">
-                                <Image
-                                    source={require('./../../assets/images/ProfilePicture.jpg')}
-                                    style={styles.displayPicture}
-                                />
+                                {
+                                    item.profilePicture ?
+                                        <Image
+                                            source={{ uri: item.profilePicture }}
+                                            style={styles.displayPicture}
+                                        />
+                                        :
+                                        <Image
+                                            source={require('./../../assets/images/ProfilePicture.jpg')}
+                                            style={styles.displayPicture}
+                                        />
+                                }
+
                                 <Text className="text-black">{item.username}</Text>
                             </View>
                             <View>
                                 <TouchableOpacity
-                                    onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, userId: item.userId, username: item.username }) }}
+                                    onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, userId: item.userId, username: item.username, userdp: item.profilePicture }) }}
                                     className=" bg-sky-500 p-2  rounded-lg"  >
                                     <Text className="text-white font-semibold">Chat</Text>
                                 </TouchableOpacity>
