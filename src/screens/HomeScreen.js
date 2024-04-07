@@ -1,5 +1,4 @@
 import { Button, StatusBar, StyleSheet, Text, View } from 'react-native';
-import BottomBar from '../components/BottomBar';
 import Activity from '../tabs/Activity';
 import Search from '../tabs/Search';
 import Upload from '../tabs/Upload';
@@ -11,6 +10,7 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import Icon1 from 'react-native-vector-icons/Feather';
 import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { DARK_MODE } from 'nativewind/dist/utils/selector';
+import { A1, A2, B1, B2 } from '../colors';
 export default function MainScreen({ navigation }) {
     const Tab = createMaterialBottomTabNavigator();
 
@@ -18,7 +18,7 @@ export default function MainScreen({ navigation }) {
         <Tab.Navigator
             initialRouteName="Activity"
             labeled={false}
-            activeColor="#3884ff"
+            activeColor={A1}
             shifting={false}
             theme={DARK_MODE}
             barStyle={{

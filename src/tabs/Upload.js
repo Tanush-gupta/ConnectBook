@@ -8,6 +8,7 @@ import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/Header';
 import uuid from 'react-native-uuid';
+import { A1, A2, B1, B2 } from '../colors';
 export default function Upload() {
     const [imgData, setImg] = useState(null);
     const [caption, setCaption] = useState();
@@ -86,12 +87,12 @@ export default function Upload() {
 
     return (
         <>
-            <View className="flex h-[107%] justify-between pb-20" style={{ backgroundColor: '#000a1a' }}>
-                <View className=" justify-center items-center p-3  bg-white " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex' }}>
-                    <Text className="font-semibold text-black">Create a new Post</Text>
+            <View className="flex h-[107%] justify-between pb-20 mb-24" style={{ backgroundColor: B1 }} >
+                <View className=" justify-center items-center p-3 " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex', backgroundColor: A1 }}>
+                    <Text className="font-semibold text-white">Create a new Post</Text>
                 </View>
 
-                <View className="justify-betweeen items-center bg-blue-100 flex p-6 mx-6 " style={styles.shadow}>
+                <View className="justify-betweeen items-center flex p-6 mx-6 " style={{}}>
 
                     <View >
                         {imgData != null ? (<Image className=" rounded-xl" style={{ width: 300, height: 300, resizeMode: 'contain', }} source={{ uri: imgData.assets[0].uri }} />) : (<Image style={styles.img} source={require('../../assets/images/img.jpg')} />)}
@@ -113,10 +114,10 @@ export default function Upload() {
 
 
                 <View className="flex-row justify-center ">
-                    <TouchableOpacity className="p-3 bg-blue-500 rounded-2xl elevated mr-8" style={styles.shadow} onPress={Camera} >
+                    <TouchableOpacity className="p-3 bg-blue-500 rounded-2xl elevated mr-8" style={{ backgroundColor: A2 }} onPress={Camera} >
                         <Text className="text-white font-semibold">Open Camera</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="p-3 bg-red-500 rounded-2xl" style={styles.shadow} onPress={Galery}>
+                    <TouchableOpacity className="p-3 bg-red-500 rounded-2xl" onPress={Galery}>
                         <Text className="text-white font-semibold">Choose from Galery</Text>
                     </TouchableOpacity>
                 </View>

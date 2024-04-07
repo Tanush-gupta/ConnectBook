@@ -5,7 +5,7 @@ import firestore from '@react-native-firebase/firestore';
 import { launchCamera } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { A1, A2, B1, B2 } from '../colors';
 const Chat = ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
   const [imageData, setImageData] = useState(null);
@@ -69,19 +69,19 @@ const Chat = ({ route, navigation }) => {
 
 
   return (
-    <View className=" flex-1 bg-[#d1d1d1]">
+    <View className=" flex-1" style={{ backgroundColor: B2 }}>
       <View
-        className="items-center p-3 bg-white flex-row  justify-between  "
-        style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4 }}>
+        className="items-center p-3  flex-row  justify-between  "
+        style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, backgroundColor: A1 }}>
         <TouchableOpacity className="flex-row items-center" onPress={() => { navigation.goBack() }}>
           <Image
             source={require('../../assets/icons/back.png')}
             className=" h-7 w-7 "
           />
-          <Text className="text-blue-400">Back</Text>
+          <Text className="text-white">Back</Text>
         </TouchableOpacity>
 
-        <Text className="text-[15px] text-black">{username}</Text>
+        <Text className="text-[15px] text-white">{username}</Text>
 
         <Image
           source={require('../../assets/icons/video.png')}
@@ -102,7 +102,7 @@ const Chat = ({ route, navigation }) => {
                     width: 24,
                     height: 24,
                     marginRight: 10,
-                    tintColor: '#52b1ff',
+                    tintColor: A1
                   }}
                 />
               </Send>
@@ -120,7 +120,7 @@ const Chat = ({ route, navigation }) => {
           return (
             <InputToolbar
               {...props}
-              containerStyle={{ backgroundColor: '#e8e8e8', borderRadius: 20, position: 'absolute', paddingLeft: 8, bottom: 6 }}>
+              containerStyle={{ backgroundColor: 'white', borderRadius: 20, position: 'absolute', paddingLeft: 8, bottom: 6 }}>
             </InputToolbar>
           )
         }}

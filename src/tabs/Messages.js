@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import { FlatList } from 'react-native';
+import Loading from '../components/Loading';
+
+import { A1, A2, B1, B2 } from '../colors';
 export default function Messages({ navigation }) {
     const [userData, setUserData] = useState(null);
     const [friends, setFriends] = useState([]);
@@ -51,14 +54,16 @@ export default function Messages({ navigation }) {
         }
     }, [userData]);
 
+    // if (!userData) {
+    //     return < Loading dataType={"Messages"} />
+    // }
     return (
-        <View style={{ height: '110%', backgroundColor: '#000a1a' }}>
-            <View className=" justify-center items-center p-3  bg-white " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex' }}>
-                <Text className="font-semibold text-black">Messages</Text>
+        <View style={{ height: '110%', backgroundColor: B1 }}>
+            <View className=" justify-center items-center p-3" style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex', backgroundColor: A1 }}>
+                <Text className="font-semibold text-white">Messages</Text>
             </View>
 
-
-            <View>
+            {userData ? <View>
                 <FlatList
                     data={friends}
                     renderItem={({ item }) => (
@@ -82,7 +87,7 @@ export default function Messages({ navigation }) {
                             <View>
                                 <TouchableOpacity
                                     onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, myDp: userData.profilePicture, userId: item.userId, username: item.username, userdp: item.profilePicture }) }}
-                                    className=" bg-sky-500 p-2  rounded-lg"  >
+                                    className=" bg-sky-500 p-2  rounded-lg" style={{ backgroundColor: A2 }}  >
                                     <Text className="text-white font-semibold">Chat</Text>
                                 </TouchableOpacity>
                             </View>
@@ -90,7 +95,8 @@ export default function Messages({ navigation }) {
                     )}
                     keyExtractor={item => item.userId}
                 />
-            </View>
+            </View> : < Loading dataType={"Messages"} />}
+
 
 
 

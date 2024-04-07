@@ -4,7 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 import { Image } from 'react-native';
 import { FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { A1, A2, B1, B2 } from '../colors';
 export default function Comments({ route, navigation }) {
 
     const postId = route.params.PostID;
@@ -65,8 +65,8 @@ export default function Comments({ route, navigation }) {
 
     return (
         <View className="h-full">
-            <View className=" justify-center items-center p-3  bg-white " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex' }}>
-                <Text className="font-semibold text-black">Comments</Text>
+            <View className=" justify-center items-center p-3  " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex', backgroundColor: A1 }}>
+                <Text className="font-semibold text-white">Comments</Text>
             </View>
 
 
@@ -94,7 +94,7 @@ export default function Comments({ route, navigation }) {
                                     <View className=" mx-2">
                                         <Image source={require('./../../assets/images/ProfilePicture.jpg')} style={styles.displayPicture} />
                                     </View>
-                                    <Text className="font-semibold mr-3 text-[16px]">{item.username}</Text>
+                                    <Text className="font-semibold mr-3 text-[17px] text-black">{item.username}</Text>
                                     <Text>{item.comment}</Text>
                                 </View>
 
@@ -118,7 +118,7 @@ export default function Comments({ route, navigation }) {
                     <TextInput placeholder='Write Comment..' className=" bg-white rounded-xl"
                         value={comment} onChangeText={(e) => { setComment(e) }} ></TextInput>
                 </View>
-                <TouchableOpacity className="bg-sky-500 p-2 " onPress={addComment}>
+                <TouchableOpacity className="p-2 " style={{ backgroundColor: A2, borderRadius: 10 }} onPress={addComment}>
                     <Text className="text-white">Comment</Text>
                 </TouchableOpacity>
             </View>

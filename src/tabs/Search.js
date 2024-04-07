@@ -5,12 +5,14 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    ActivityIndicator
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import { FlatList } from 'react-native';
-
+import Loading from '../components/Loading';
+import { A1, A2, B1, B2 } from '../colors';
 export default function Search() {
     const [userId, setUserId] = useState('');
     const [users, setUsers] = useState([]);
@@ -95,10 +97,10 @@ export default function Search() {
     };
 
     return (
-        <View style={{ backgroundColor: '#000a1a', height: "200%" }} >
+        <View style={{ backgroundColor: B1, height: "200%" }} className="  mb-24">
             < View >
-                <View className="flex-row items-center  m-2  rounded-3xl bg-white "  >
-
+                {/* Search Bar */}
+                <View className="flex-row items-center  m-2  rounded-3xl" style={{ backgroundColor: B2 }}  >
                     <Image
                         source={require('./../../assets/icons/searchg.png')}
                         className="h-6 w-6 ml-3"
@@ -109,8 +111,7 @@ export default function Search() {
                         className="ml-3"
                         onChangeText={e => setSearch(e)}></TextInput>
                 </View>
-
-                <FlatList
+                {userData ? <FlatList
                     data={users}
                     renderItem={({ item }) => (
                         <View className=" flex-row items-center justify-between  px-2 bg-white rounded-lg ">
@@ -133,7 +134,8 @@ export default function Search() {
                             </View>
                             <View>
                                 <TouchableOpacity
-                                    className=" bg-sky-500 p-2  rounded-lg"
+                                    className=" p-2 rounded-lg"
+                                    style={{ backgroundColor: A2 }}
                                     onPress={() => follow(item.userId)}>
                                     <Text className="text-white font-semibold">Follow</Text>
                                 </TouchableOpacity>
@@ -141,7 +143,8 @@ export default function Search() {
                         </View>
                     )}
                     keyExtractor={item => item.userId}
-                />
+                /> : <Text className="text-center top-[200%]"> < Loading dataType={"Friends"} />  </Text>}
+
             </View >
         </View >
     );

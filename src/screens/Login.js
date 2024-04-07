@@ -42,7 +42,7 @@ export default function LoginScreen() {
     return (
         <View className="bg-white h-full w-full">
             <StatusBar hidden={true} />
-            <Image className="h-full w-full absolute" source={require('../../assets/images/background.png')} />
+            <Image className="h-[85%] w-full absolute" source={require('../../assets/images/background.png')} />
 
             {/* lights */}
             <View className="flex-row justify-around w-full absolute">

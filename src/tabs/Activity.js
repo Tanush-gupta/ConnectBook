@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import Card from '../components/Card';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
+import { A1, A2, B1, B2 } from '../colors';
 export default function Activity({ navigation }) {
 
     const [postData, setPostData] = useState([]);
@@ -22,9 +24,9 @@ export default function Activity({ navigation }) {
             }).catch(error => console.error('Error searching document: ', error));
     }, []);
     return (
-        <View style={{ backgroundColor: '#303236' }}>
+        <View style={{ backgroundColor: 'white' }} className="  mb-24">
             <Header navigation={navigation} />
-            <View className=" w-full justify-center items-center" style={{ backgroundColor: "#000a1a" }}>
+            <View className=" w-full justify-center items-center" style={{ backgroundColor: B1 }}>
                 {postData.length > 0 ? (
 
                     < FlatList
@@ -34,7 +36,7 @@ export default function Activity({ navigation }) {
                     />
 
                 )
-                    : <ActivityIndicator size="large" />
+                    : <Text className="text-center top-[200%]">  <Loading dataType={'Fetching Posts'} /> </Text>
                 }
             </View>
         </View >

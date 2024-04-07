@@ -64,7 +64,7 @@ export default function SignupScreen() {
     return (
         <View className="bg-white h-full w-full">
             <StatusBar style="light" />
-            <Image className="h-full w-full absolute" source={require('../../assets/images/background.png')} />
+            <Image className="h-[85%] w-full absolute" source={require('../../assets/images/background.png')} />
 
             {/* lights */}
             <View className="flex-row justify-around w-full absolute">

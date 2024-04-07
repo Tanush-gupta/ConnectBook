@@ -11,17 +11,18 @@ import Chat from './Chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AppNavigation() {
-    const [isSignedIn, setIsSignedIn] = useState(null);
+    const [isSignedIn, setIsSignedIn] = useState(false);
 
     useEffect(() => {
         const checkSignIn = async () => {
             const storedUserId = await AsyncStorage.getItem('UserId');
-            setIsSignedIn(!!storedUserId);
+            if (storedUserId)
+                setIsSignedIn(true);
         };
         setTimeout(() => {
             checkSignIn();
-        }, 2000);
-    });
+        }, 1000);
+    }, []);
 
     const Stack = createNativeStackNavigator();
 

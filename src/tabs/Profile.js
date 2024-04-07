@@ -1,10 +1,12 @@
-import { ActivityIndicator, Alert, Button, ImageBackground, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import Loading from '../components/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import storage from '@react-native-firebase/storage';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Image } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { A1, A2, B1, B2 } from '../colors';
 export default function Profile() {
     const [imgData, setImg] = useState(null);
     const [userData, setUserData] = useState(null);
@@ -80,7 +82,7 @@ export default function Profile() {
     }, [update]);
 
     if (!userData) {
-        return < ActivityIndicator />
+        return < Loading dataType={"Profile"} />
     }
 
     const changeDP = async () => {
@@ -93,7 +95,7 @@ export default function Profile() {
             <View className=" h-full">
                 {userData && (
                     <View className="p-5 items-center">
-                        <View className=" flex my-2 items-center w-full bg-slate-100  my-20 p-5  rounded-xl" style={styles.shadow}>
+                        <View className=" flex my-2 items-center w-full bg-slate-100  my-20 p-5  rounded-xl" style={{ backgroundColor: B1 }}>
                             <TouchableOpacity className=" mx-2" onLongPress={changeDP}>
 
                                 {
@@ -109,7 +111,7 @@ export default function Profile() {
                             </View>
                             {
                                 !update &&
-                                <View className=" bg-[#dfe1e6]  p-2 rounded-xl my-5">
+                                <View className="p-2 rounded-xl my-5" style={{ backgroundColor: B2 }}>
                                     <Text> {userData.bio} </Text>
                                 </View>
                             }
@@ -126,7 +128,7 @@ export default function Profile() {
                                     </TouchableOpacity>
                                 </View>
                             </View> :
-                                <TouchableOpacity className="rounded-[9px] p-2  w-22 bg-[#24a7f2] " onPress={() => { setUpdate(true) }} >
+                                <TouchableOpacity className="rounded-[9px] p-2  w-22" style={{ backgroundColor: A1 }} onPress={() => { setUpdate(true) }} >
                                     <Text className="font-semibold   text-gray-100  ">Update About </Text>
                                 </TouchableOpacity>
                             }
@@ -172,14 +174,14 @@ const styles = StyleSheet.create({
     box: {
         borderRadius: 10,
         borderBlockColor: 'white',
-        backgroundColor: '#1d272b',
+        backgroundColor: '#8752fa',
         marginVertical: 16,
         paddingHorizontal: 12,
         paddingVertical: 10
 
     },
     shadow: {
-        shadowColor: "#000",
+        shadowColor: "#fab76b",
         shadowOffset: {
             width: 0,
             height: 3,

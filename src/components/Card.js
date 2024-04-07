@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore, { firebase } from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import { A1, A2, B1, B2 } from '../colors';
 export default function Card({ Post }) {
     const navigation = useNavigation();
     const [like, setLike] = useState(false);
@@ -57,7 +58,7 @@ export default function Card({ Post }) {
             .catch(error => console.error('Error updating document: ', error));
     };
     return (
-        <View className=" my-4  bg-white p-4  rounded-[4px] ">
+        <View className=" my-4 p-4  rounded-[4px] " style={{ backgroundColor: B2 }}>
             <View className=" flex-row my-2 items-center">
                 <View className=" mx-2">
                     {dp ? <Image
@@ -82,24 +83,25 @@ export default function Card({ Post }) {
                 <TouchableOpacity onPress={LikePressed}>
                     {like ? (
                         <Image
-                            className="h-9 w-9 p-1"
+                            className="h-8 w-8 mx-1"
                             source={require('./../../assets/icons/heart1.png')}
                         />
                     ) : (
                         <Image
-                            className="h-9 w-9 p-1"
+                            className="h-8 w-8 p-1"
                             source={require('./../../assets/icons/heart.png')}
                         />
                     )}
                 </TouchableOpacity>
-                <Text>{Post.likes ? Post.likes.length : 0}</Text>
+                <Text className=" font-semibold">{Post.likes ? Post.likes.length : 0}</Text>
 
                 <TouchableOpacity onPress={commentPressed}>
                     <Image
-                        className="h-7 w-7 p-1 mx-2"
+                        className="h-7 w-7 p-1 mx-1"
                         source={require('./../../assets/icons/comment.png')}
                     />
                 </TouchableOpacity>
+                <Text className=" font-semibold" >{Post.comments ? Post.comments.length : 0}</Text>
             </View>
         </View>
     );
