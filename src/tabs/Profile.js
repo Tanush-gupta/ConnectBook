@@ -20,7 +20,6 @@ export default function Profile() {
             setImg(result);
         }
     }
-
     const Post = async () => {
         if (imgData?.assets?.length > 0) {
             const reference = storage().ref(imgData.assets[0].fileName);
@@ -90,7 +89,7 @@ export default function Profile() {
     }
 
     return (
-        <ImageBackground source={require('../../assets/images/profile_bg.jpeg')} className="h-full" >
+        <ImageBackground source={require('../../assets/images/profile_bg.jpeg')} className="h-[120%]" >
             <View className=" h-full">
                 {userData && (
                     <View className="p-5 items-center">

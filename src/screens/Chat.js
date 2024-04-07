@@ -10,7 +10,7 @@ const Chat = ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
   const [imageData, setImageData] = useState(null);
   const [imageUrl, setImageUrl] = useState();
-  const { myId, userId, username, userdp } = route.params;
+  const { myId, userId, username, userdp, myDp } = route.params;
   let docId = sortAlpha(myId + userId);
 
   function sortAlpha(word) {
@@ -47,7 +47,6 @@ const Chat = ({ route, navigation }) => {
         receiverId: userId,
         image: imageUrl || '',
         createdAt: firestore.FieldValue.serverTimestamp(),
-
       };
       try {
         await firestore()
@@ -70,7 +69,7 @@ const Chat = ({ route, navigation }) => {
 
 
   return (
-    <View className=" flex-1 bg-sky-100 ">
+    <View className=" flex-1 bg-[#d1d1d1]">
       <View
         className="items-center p-3 bg-white flex-row  justify-between  "
         style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4 }}>
@@ -91,7 +90,7 @@ const Chat = ({ route, navigation }) => {
       </View>
 
       <GiftedChat
-        alwaysShowSend
+        alwaysShowSend={true}
         renderSend={props => {
           return (
             <View
@@ -114,18 +113,26 @@ const Chat = ({ route, navigation }) => {
         onSend={messages => onSend(messages)}
         user={{
           _id: myId,
-          avatar: userdp,
+          avatar: myDp,
         }}
 
         renderInputToolbar={props => {
           return (
             <InputToolbar
               {...props}
-              containerStyle={{ backgroundColor: 'white', borderRadius: 20, position: 'absolute' }}>
+              containerStyle={{ backgroundColor: '#e8e8e8', borderRadius: 20, position: 'absolute', paddingLeft: 8, bottom: 6 }}>
             </InputToolbar>
           )
         }}
 
+
+        renderMessage={props => {
+          return (
+            <View style={{ marginBottom: 19 }}>
+              <Message {...props} />
+            </View>
+          )
+        }}
 
 
       />

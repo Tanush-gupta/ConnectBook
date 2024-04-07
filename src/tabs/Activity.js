@@ -22,9 +22,9 @@ export default function Activity({ navigation }) {
             }).catch(error => console.error('Error searching document: ', error));
     }, []);
     return (
-        <View>
+        <View style={{ backgroundColor: '#303236' }}>
             <Header navigation={navigation} />
-            <View className=" w-full justify-center items-center bg-gray-300">
+            <View className=" w-full justify-center items-center" style={{ backgroundColor: "#000a1a" }}>
                 {postData.length > 0 ? (
 
                     < FlatList

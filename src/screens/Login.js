@@ -1,4 +1,4 @@
-import { View, Text, Image, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, SafeAreaView, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
@@ -41,7 +41,7 @@ export default function LoginScreen() {
 
     return (
         <View className="bg-white h-full w-full">
-            <StatusBar />
+            <StatusBar hidden={true} />
             <Image className="h-full w-full absolute" source={require('../../assets/images/background.png')} />
 
             {/* lights */}
@@ -71,6 +71,7 @@ export default function LoginScreen() {
                 </View>
 
                 {/* form */}
+
                 <View className="flex items-center mx-5 space-y-4">
                     <Animated.View
                         entering={FadeInDown.duration(1000).springify()}

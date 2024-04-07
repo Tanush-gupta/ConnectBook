@@ -95,53 +95,55 @@ export default function Search() {
     };
 
     return (
-        <View>
-            <View className="bg-white flex-row items-center  m-2  rounded-3xl ">
+        <View style={{ backgroundColor: '#000a1a', height: "200%" }} >
+            < View >
+                <View className="flex-row items-center  m-2  rounded-3xl bg-white "  >
 
-                <Image
-                    source={require('./../../assets/icons/searchg.png')}
-                    className="h-6 w-6 ml-3"
+                    <Image
+                        source={require('./../../assets/icons/searchg.png')}
+                        className="h-6 w-6 ml-3"
+                    />
+                    <TextInput
+                        placeholder="Search By Name"
+                        placeholderTextColor={'gray'}
+                        className="ml-3"
+                        onChangeText={e => setSearch(e)}></TextInput>
+                </View>
+
+                <FlatList
+                    data={users}
+                    renderItem={({ item }) => (
+                        <View className=" flex-row items-center justify-between  px-2 bg-white rounded-lg ">
+                            <View className=" flex-row items-center p-2 ">
+
+                                {
+                                    item.profilePicture ?
+                                        <Image
+                                            source={{ uri: item.profilePicture }}
+                                            style={styles.displayPicture}
+                                        />
+                                        :
+                                        <Image
+                                            source={require('./../../assets/images/ProfilePicture.jpg')}
+                                            style={styles.displayPicture}
+                                        />
+                                }
+
+                                <Text className="text-black">{item.username}</Text>
+                            </View>
+                            <View>
+                                <TouchableOpacity
+                                    className=" bg-sky-500 p-2  rounded-lg"
+                                    onPress={() => follow(item.userId)}>
+                                    <Text className="text-white font-semibold">Follow</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )}
+                    keyExtractor={item => item.userId}
                 />
-                <TextInput
-                    placeholder="Search By Name"
-                    placeholderTextColor={'gray'}
-                    className="ml-3"
-                    onChangeText={e => setSearch(e)}></TextInput>
-            </View>
-
-            <FlatList
-                data={users}
-                renderItem={({ item }) => (
-                    <View className=" flex-row items-center justify-between  px-2 bg-white rounded-lg ">
-                        <View className=" flex-row items-center p-2 ">
-
-                            {
-                                item.profilePicture ?
-                                    <Image
-                                        source={{ uri: item.profilePicture }}
-                                        style={styles.displayPicture}
-                                    />
-                                    :
-                                    <Image
-                                        source={require('./../../assets/images/ProfilePicture.jpg')}
-                                        style={styles.displayPicture}
-                                    />
-                            }
-
-                            <Text className="text-black">{item.username}</Text>
-                        </View>
-                        <View>
-                            <TouchableOpacity
-                                className=" bg-sky-500 p-2  rounded-lg"
-                                onPress={() => follow(item.userId)}>
-                                <Text className="text-white font-semibold">Follow</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                )}
-                keyExtractor={item => item.userId}
-            />
-        </View>
+            </View >
+        </View >
     );
 }
 

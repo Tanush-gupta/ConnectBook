@@ -86,15 +86,15 @@ export default function Upload() {
 
     return (
         <>
-            <View className="flex h-full justify-between pb-20">
+            <View className="flex h-[107%] justify-between pb-20" style={{ backgroundColor: '#000a1a' }}>
                 <View className=" justify-center items-center p-3  bg-white " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex' }}>
                     <Text className="font-semibold text-black">Create a new Post</Text>
                 </View>
 
-                <View className="justify-betweeen items-center bg-blue-100 flex p-6 mx-6 rounded-xl " style={styles.shadow}>
+                <View className="justify-betweeen items-center bg-blue-100 flex p-6 mx-6 " style={styles.shadow}>
 
                     <View >
-                        {imgData != null ? (<Image className=" rounded-xl" style={{ width: 300, height: 300, resizeMode: 'cover', }} source={{ uri: imgData.assets[0].uri }} />) : (<Image style={styles.img} source={require('../../assets/images/img.jpg')} />)}
+                        {imgData != null ? (<Image className=" rounded-xl" style={{ width: 300, height: 300, resizeMode: 'contain', }} source={{ uri: imgData.assets[0].uri }} />) : (<Image style={styles.img} source={require('../../assets/images/img.jpg')} />)}
                     </View>
 
                     {imgData != null && (
@@ -108,7 +108,7 @@ export default function Upload() {
                             </TouchableOpacity>
                         </View>)
                     }
-                </View>
+                </ View>
 
 
 

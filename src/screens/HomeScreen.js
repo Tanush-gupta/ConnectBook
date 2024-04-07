@@ -1,37 +1,88 @@
-import { Button, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
-import { utils } from '@react-native-firebase/app';
+import { Button, StatusBar, StyleSheet, Text, View } from 'react-native';
 import BottomBar from '../components/BottomBar';
-import storage from '@react-native-firebase/storage';
 import Activity from '../tabs/Activity';
 import Search from '../tabs/Search';
 import Upload from '../tabs/Upload';
 import Messages from '../tabs/Messages';
 import Profile from '../tabs/Profile';
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
+import Icon from 'react-native-vector-icons/Entypo';
+import Icon2 from 'react-native-vector-icons/Entypo';
+import Icon1 from 'react-native-vector-icons/Feather';
+import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import { DARK_MODE } from 'nativewind/dist/utils/selector';
 export default function MainScreen({ navigation }) {
-
-    const [page, setPage] = useState(1);
-    const temp = (s) => {
-        console.log(s);
-        setPage(s);
-    }
-
-
+    const Tab = createMaterialBottomTabNavigator();
 
     return (
-        <View style={{ height: '100%', backgroundColor: "#e8e8e8", marginBottom: 100 }} >
-            <View className="  mb-[100px]" >
-                {
-                    page == 1 ? <Activity navigation={navigation} /> : page == 2 ? <Search /> : page == 3 ? <Upload /> : page == 4 ? <Messages navigation={navigation} /> : <Profile />
-                }
-            </View>
+        <Tab.Navigator
+            initialRouteName="Activity"
+            labeled={false}
+            activeColor="#3884ff"
+            shifting={false}
+            theme={DARK_MODE}
+            barStyle={{
+                position: 'relative',
+                backgroundColor: '#f2f4f7',
+                borderRadius: 20,
+                overflow: 'hidden',
+                marginHorizontal: 4,
+            }}
+            activeIndicatorStyle={{
+                backgroundColor: "white",
+                padding: 2
+            }}
 
-            <View style={{ position: 'absolute', width: '100%', bottom: 0, }} >
-                <BottomBar st={temp} />
-            </View >
-        </ View >
-    )
+        >
+            <Tab.Screen
+                name="Activity"
+                component={Activity}
+                options={{
+                    tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} />,
+                }}
+            />
+            <Tab.Screen
+                name="Search"
+                component={Search}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon1 name="search" color={color} size={30} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Upload"
+                component={Upload}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon1 name="upload" color={color} size={30} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Message"
+                component={Messages}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon name="message" color={color} size={30} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={Profile}
+                options={{
+                    tabBarLabel: 'Home',
+                    tabBarIcon: ({ color }) => (
+                        <Icon1 name="user" color={color} size={30} />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+
+
+
+    );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

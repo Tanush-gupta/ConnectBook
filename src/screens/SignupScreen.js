@@ -52,11 +52,10 @@ export default function SignupScreen() {
                         })
                         .then(() => {
                             console.log('User added!');
-                            // saveLocalData();
                         });
                     showToastWithGravity("User added!");
                     setTimeout(() => {
-                        navigation.goBack();
+                        navigation.navigate('LoginScreen');
                     }, 800)
                 }
             }
@@ -146,7 +145,7 @@ export default function SignupScreen() {
                         className="flex-row justify-center">
 
                         <Text>Already have an account? </Text>
-                        <TouchableOpacity onPress={() => navigation.push(LoginScreen)}>
+                        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
                             <Text className="text-sky-600">Login</Text>
                         </TouchableOpacity>
 

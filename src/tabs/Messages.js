@@ -20,6 +20,7 @@ export default function Messages({ navigation }) {
             }
         };
         getUserDetails();
+
     }, []);
 
     useEffect(() => {
@@ -51,7 +52,7 @@ export default function Messages({ navigation }) {
     }, [userData]);
 
     return (
-        <View style={styles.container}>
+        <View style={{ height: '110%', backgroundColor: '#000a1a' }}>
             <View className=" justify-center items-center p-3  bg-white " style={{ borderBottomColor: 'grey', borderBottomWidth: 0.4, display: 'flex' }}>
                 <Text className="font-semibold text-black">Messages</Text>
             </View>
@@ -61,7 +62,7 @@ export default function Messages({ navigation }) {
                 <FlatList
                     data={friends}
                     renderItem={({ item }) => (
-                        <View className=" flex-row items-center justify-between  px-2 bg-white rounded-lg ">
+                        <View className=" flex-row items-center justify-between  px-2 bg-white ">
                             <View className=" flex-row items-center p-2 ">
                                 {
                                     item.profilePicture ?
@@ -80,7 +81,7 @@ export default function Messages({ navigation }) {
                             </View>
                             <View>
                                 <TouchableOpacity
-                                    onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, userId: item.userId, username: item.username, userdp: item.profilePicture }) }}
+                                    onPress={() => { navigation.push("ChatScreen", { myId: userData.userId, myDp: userData.profilePicture, userId: item.userId, username: item.username, userdp: item.profilePicture }) }}
                                     className=" bg-sky-500 p-2  rounded-lg"  >
                                     <Text className="text-white font-semibold">Chat</Text>
                                 </TouchableOpacity>
